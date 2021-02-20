@@ -1,0 +1,55 @@
+mkdir ddp-332
+cd ddp-332
+mkdir aws_user
+
+pipenv --three
+pipenv install boto3
+pipenv install -d ipython
+pipenv install click
+pipenv install -d pycodestyle
+pipenv install -d pydocstyle
+pipenv install -d pylint
+pipenv install kubernetes
+
+pipenv run ipython
+
+pipenv shell
+
+pycodestyle aws_user/aws_user.py
+pydocstyle aws_user/aws_user.py
+pylint aws_user/aws_user.py
+pipenv install -d pyflakes
+
+python aws_user/aws_user.py
+python -m aws_user.aws_user --profile=pt-operator --help
+
+pipenv install -d setuptools
+
+python setup.py bdist_wheel # in pipenv shell
+
+STH-C02XW07UJGH7:ddp-332 larnis$ pwd
+/Users/larnis/dev/codebase/automating-aws-with-python/ddp-332
+
+pip3 install dist/aws_user-0.1-py3-none-any.whl
+pip3 show aws-user
+
+pip3 uninstall dist/aws_user-0.1-py3-none-any.whl
+
+STH-C02XW07UJGH7:ddp-332 larnis$ aws_user
+Usage: aws_user [OPTIONS] COMMAND [ARGS]...
+
+  aws-user manages AWS temporary users for firefighter access.
+
+Options:
+  --profile TEXT            Use a given AWS profile.
+  --kubeconfig TEXT         Use a KUBECONFIG file name.
+  --clustername TEXT        Use a EKS cluster name.
+  --namespace TEXT          Use a K8S namespace.
+  --label_selector TEXT     Use a K8S label selector.
+  --expire_annotation TEXT  Use a K8S expire annotation.
+  --help                    Show this message and exit.
+
+Commands:
+  create-temp-aws-k8s-resources   Generate temp firefighter resources.
+  delete-expired-aws-k8s-resources
+                                  Delete expired firefighter resources.
